@@ -72,6 +72,32 @@ rands = [
 
 [[ test ]]
 game_system = "Insane"
+input = "MCST"
+output = "真夜中のおるすばんシーン表(5) ＞ 視線を感じる……密かに警視されていることは間違いないようだ。勘弁してくれ。"
+rands = [
+  { sides = 6, value = 5 },
+]
+
+[[ test ]]
+game_system = "Insane"
+input = "TTST"
+output = "大正帝都シーン表(11) ＞ 帝國図書館の書架の前で、目的の本を探す。この膨大な本の中に、求める知識はあるはずだ。"
+rands = [
+  { sides = 6, value = 5 },
+  { sides = 6, value = 6 },
+]
+
+[[ test ]]
+game_system = "Insane"
+input = "GMST"
+output = "耳シーン表(12) ＞ PC①の耳がエルフのようにとがる。"
+rands = [
+  { sides = 6, value = 6 },
+  { sides = 6, value = 6 },
+]
+
+[[ test ]]
+game_system = "Insane"
 input = "DT"
 output = "形容表(11) ＞ 青ざめた"
 rands = [
