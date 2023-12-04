@@ -22,14 +22,14 @@ module BCDice
             2VMF6+3
             2VMI9H3
 
-          難易度指定：成功数のカウント、判定成功と失敗、Critical処理、Critical Winのチェックを行う
+          難易度指定：成功数のカウント、判定成功と失敗、Critical処理、Critical Win、Total Failureのチェックを行う
                      （Hungerダイスがある場合）Messy CriticalとBestial Failureチェックを行う
           例) (難易度)VMF(通常ダイス)+(Hungerダイス)
               (難易度)VMF(通常ダイス)
               (難易度)VMI(通常ダイス)H(Hungerダイス)
               (難易度)VMI(通常ダイス)
 
-          難易度省略：成功数のカウント、判定失敗、Critical処理、（Hungerダイスがある場合）Bestial Failureチェックを行う
+          難易度省略：成功数のカウント、判定失敗、Critical処理、Total Failure、（Hungerダイスがある場合）Bestial Failureチェックを行う
                       判定成功、Messy Criticalのチェックを行わない
                       Critical Win、（Hungerダイスがある場合）Bestial Failure、Messy Criticalのヒントを出力
           例) VMF(通常ダイス)+(Hungerダイス)
@@ -58,7 +58,7 @@ module BCDice
       register_prefix('\d*(VMF|(VMI\d*(H\d?)?))')
 
       def eval_game_system_specific_command(command)
-        m = /\A(\d+)?(((VMF)(\d)(\+(\d+))?)|((VMI)(\d)(H(\d+))?))$/.match(command)
+        m = /\A(\d+)?(((VMF)(\d+)(\+(\d+))?)|((VMI)(\d+)(H(\d+))?))$/.match(command)
         unless m
           return ''
         end
@@ -66,6 +66,9 @@ module BCDice
         dice_pool, hunger_dice_pool = get_dice_pools(m)
         if dice_pool < 0
           return "ダイスプールより多いHungerダイスは指定できません。"
+        end
+        if hunger_dice_pool && hunger_dice_pool > 5
+          return "Hungerダイス指定は5ダイスが最大です。"
         end
 
         dice_text, success_dice, ten_dice, = make_dice_roll(dice_pool)
@@ -128,6 +131,9 @@ module BCDice
             if hunger_botch_dice > 0
               return Result.fumble("#{result_text}：判定失敗! [Bestial Failure]")
             end
+            if success_dice == 0
+              return Result.fumble("#{result_text}：判定失敗! [Total Failure]")
+            end
 
             return Result.failure("#{result_text}：判定失敗!")
           end
@@ -137,7 +143,7 @@ module BCDice
               return Result.fumble("#{result_text}：判定失敗! [Bestial Failure]")
             end
 
-            return Result.failure("#{result_text}：判定失敗!")
+            return Result.fumble("#{result_text}：判定失敗! [Total Failure]")
           else
             if hunger_botch_dice > 0
               result_text = "#{result_text}\n　判定失敗なら [Bestial Failure]"
