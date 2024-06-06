@@ -18,7 +18,8 @@ module BCDice
         ・各種表
         シーン表　ST
         　本当は怖い現代日本シーン表 HJST／狂騒の二〇年代シーン表 MTST
-        　暗黒のヴィクトリアシーン表 DVST
+        　暗黒のヴィクトリアシーン表 DVST／真夜中のおるすばんシーン表 MCST
+        　大正帝都シーン表 TTST　／耳シーン表 GMST
         形容表 DT／本体表 BT／部位表 PT
         感情表　　　　　　FT
         職業表　　　　　　JT
@@ -150,6 +151,9 @@ module BCDice
             "HJST" => DiceTable::Table.from_i18n("Insane.table.HJST", locale),
             "MTST" => DiceTable::Table.from_i18n("Insane.table.MTST", locale),
             "DVST" => DiceTable::Table.from_i18n("Insane.table.DVST", locale),
+            "MCST" => DiceTable::Table.from_i18n("Insane.table.MCST", locale),
+            "TTST" => DiceTable::Table.from_i18n("Insane.table.TTST", locale),
+            "GMST" => DiceTable::Table.from_i18n("Insane.table.GMST", locale),
             "DT" => DiceTable::D66Table.from_i18n("Insane.table.DT", locale),
             "BT" => DiceTable::D66Table.from_i18n("Insane.table.BT", locale),
             "PT" => DiceTable::D66Table.from_i18n("Insane.table.PT", locale),
